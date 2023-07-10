@@ -2,8 +2,7 @@ package main
 
 import (
 	"fmt"
-	"os"
-	
+	"os"	
 )
 
 type Card struct{
@@ -15,6 +14,7 @@ type Inserter interface{
 	insert(c Card)error
 	
 }
+
 type Displayer interface{
 	display()
 }
@@ -29,7 +29,6 @@ type Worker interface {
 	Searcher
 }
 
-
 func NewCard() *Card{
 	var eng, rus string
 	fmt.Println("Заполните карточку")
@@ -42,7 +41,6 @@ func NewCard() *Card{
 		Russian: rus,
 	}
 }
-
 
 type StorageMap struct {
 	data map[string]string
@@ -72,10 +70,8 @@ func (s *StorageMap) search(word string)  error {
 	}else{
 		fmt.Println("Нет такого слова в базe")
 	}
-	
 	return nil
 }
-
 
 type StorageList struct{
 	data []Card
@@ -92,7 +88,6 @@ func (s *StorageList) insert(c Card) error{
 	return nil
 }
 
-
 func (s *StorageList) display(){
 	for k, v := range s.data{
 		fmt.Println(k,":", v)
@@ -106,14 +101,9 @@ func (s *StorageList) search(word string) error {
 		}else{
 			fmt.Println("Нет такого слова в базe")
 		}
-
 	}
-    
-	
-
 	return nil
 }
-
 
 func allTypeInsert(s Worker, c Card) error{
 	s.insert(c)
@@ -131,20 +121,15 @@ func AllSearch(s Worker, word string){
 }
 
 
-
 func main()  {
 	var ch int
 	var word string 
 	data_dict := NewStorageMap()
 	data_list := NewStorageList()
-
 	var m, l Worker = &StorageMap{data_dict.data}, &StorageList{data_list.data} 
-
-	
-
 	for {
-		fmt.Println("Введите цифру 1-ввод, 2-распечатать", 
-					"3-распечатать 4-search key 5-exit")
+		fmt.Println("Введите цифру 1-ввод, 2-распечатать map", 
+					"3-распечатать slice, 4-search in map, 5-search in slice, 6-exit")
 		fmt.Scan(&ch)
 		switch ch {
 		case 1:
@@ -169,14 +154,4 @@ func main()  {
 			os.Exit(0)
 		}
 	}
-
-
-
-
-	
-
-	
-	
-
-
 }
